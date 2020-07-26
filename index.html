@@ -11,7 +11,39 @@
 <title>Animal Quiz</title>
 </head>
 <body>
-    
+    <div class="container">
+        <div class="question-container">
+            <div class="question">
+                <h3>Question</h3>
+            </div>
+            <div class="btn-group-vertical answer-buttons">
+                <button class="btn">Answer 1</button>
+                <button class="btn">Answer 2</button>
+                <button class="btn">Answer 3</button>
+                <button class="btn">Answer 4</button>
+            </div>
+            <div class="answer-reveal">
+                Answer
+            </div>
+        </div>
+        <div class="start-game">
+            <button class="start-btn"> Start Quiz </button>
+        </div>
+        <div class="end-game">
+            <div class="end-game-results">
+                <h2>All done!</h2>
+                <h4>Your final score is: </h4>
+            </div>
+            <div class="input-group mb-3 end-game-submit">
+                <input type="text" class="form-control" placeholder="Player Initials" aria-label="Player Initials" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" id="button-addon2">Submit Score</button>
+                </div>
+              </div>
+        </div>
+        
+    </div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
