@@ -1,0 +1,33 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: 'Mulish', sans-serif;
+}
+
+body {
+    background-color: ghostwhite;
+    color: black;
+}
+
+.container {
+    width: 800px;
+    max-width: 80%;
+    margin-top: 30px;
+    padding: 10px;
+    align-items: center;
+    align-content: center;   
+}
+
+.btn {
+    background-color: #330066;
+    color: ghostwhite;
+    margin: 7px;
+    border: ghostwhite 3px;
+}
+
+.answer-reveal {
+    border-top: solid slategray 2px;
+    color: slategray;
+    font-size: 14pt;
+    margin-top: 10px;
+    
+}
