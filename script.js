@@ -1,26 +1,56 @@
+//Variables from HTML elements
 var startContainer = document.getElementById('start-container');
 var startButton = document.getElementById('start-btn');
 var topRow = document.getElementById('top-row');
 var questionContainer = document.getElementById('question-container');
 var endContainer = document.getElementById('end-container');
+var timeEl = document.getElementById('timer');
+var endQuizContainer = document.getElementById('end-container');
+//JS Variables
+var secondsLeft = 60;
+var userScore = 0;
 
-
+//JS button Events
 startButton.addEventListener("click", startQuiz);
 
-
+//press the start button, opens up questions, starts timer!
 function startQuiz() {
     startContainer.classList.add('hide');
     questionContainer.classList.remove('hide');
     setNextQuestion();
+    startTimer();
+}
+//Brings up new question
+function setNextQuestion() {
+    var questionElement = document.getElementById('quizQuestion');
+    var questionIndex = Math.floor(Math.random() * 6);
+    console.log("Question element is:", questionElement);
+    console.log("question index is:", questionIndex);
+    questionElement.innerText = questions[questionIndex][question];
+
 }
 
-function setNextQuestion() {
-    var question = document.getElementById('question');
-    question.innerHTML = questions.question;
+function startTimer() {
+    var timeInterval = setInterval(function() {
+        secondsLeft--;
+        timeEl.textContent = "Timer: " + secondsLeft;
+
+        if(secondsLeft === 0) {
+            clearInterval(timeInterval);
+            endQuiz();
+        }
+    })
 }
 
 function selectAnswer() {
 
+}
+
+function endQuiz() {
+    questionContainer.classList.add('hide');
+    endQuizContainer.classList.remove('hide');
+    userEndScore = document.getElementById('scoreTotal');
+    userEndScore.innerText = "Your final score is: " + userScore;
 }
 
 var questions = [
@@ -71,17 +101,4 @@ var questions = [
     }
 ]
 
-
-
-function submitScore() {
-
-}
-
-function viewHighscores() {
-
-}
-
-function goBack() {
-
-}
 
