@@ -58,21 +58,15 @@ function startTimer() {
     }, 1000);
 }
 
-//Answer Timer which reveals if answer is right or wrong after answer is clicked.
-function correctAnswerTimer() {
-    answerRevealP.textContent = "Correct!";
-    answerRevealP.classList.remove('hide');
-}; 
-
-function wrongAnswerTimer() {
-    answerRevealP.textContent = "Wrong";
-    answerRevealP.classList.remove('hide');
-};
-
-//Action after selecting the right or wrong answer
+//Action after selecting the right or wrong answer, also gives user Correct or Wrong message
 function selectAnswer() {
     if (this.value === questions[questionIndex].correct_answer) {
-        setInterval(correctAnswerTimer, 3000);
+        var correctReveal = setInterval(correctAnswerTimer, 100);
+            function correctAnswerTimer() {
+                answerRevealP.textContent = "Correct!";
+                answerRevealP.classList.remove('hide');
+                clearInterval(correctReveal);
+            }; 
         questionIndex++;
         userScore+=3;
         setNextQuestion();    
@@ -83,10 +77,15 @@ function selectAnswer() {
                 startTimer();
             } else {
                 questionIndex++;
-                setInterval(wrongAnswerTimer, 3000);
+                var wrongReveal = setInterval(wrongAnswerTimer, 100);
+                    function wrongAnswerTimer() {
+                        answerRevealP.textContent = "Wrong";
+                        answerRevealP.classList.remove('hide');
+                        clearInterval(wrongReveal);
+                    };
                 setNextQuestion();
             }       
-    }
+        }
 }
 
 //Brings up End Quiz Container
