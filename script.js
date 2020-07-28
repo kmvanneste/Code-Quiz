@@ -6,9 +6,12 @@ var questionContainer = document.getElementById('question-container');
 var endContainer = document.getElementById('end-container');
 var timeEl = document.getElementById('timer');
 var endQuizContainer = document.getElementById('end-container');
+var answerDiv = document.getElementById('answer-buttons');
+
 //JS Variables
 var secondsLeft = 60;
 var userScore = 0;
+var questionIndex = 0;
 
 //JS button Events
 startButton.addEventListener("click", startQuiz);
@@ -22,12 +25,21 @@ function startQuiz() {
 }
 //Brings up new question
 function setNextQuestion() {
+    answerDiv.innerHTML = "";
     var questionElement = document.getElementById('quizQuestion');
-    var questionIndex = Math.floor(Math.random() * 6);
     console.log("Question element is:", questionElement);
     console.log("question index is:", questionIndex);
-    questionElement.innerText = questions[questionIndex][question];
+    console.log(questions[questionIndex].question);
+    questionElement.textContent = questions[questionIndex].question;
 
+    questions[questionIndex].answers.forEach(function(answer, i) {
+        var buttonEl = document.createElement("button");
+        buttonEl.classList.add("btn", "btn-outline-secondary");
+        buttonEl.setAttribute("value", answer);
+        buttonEl.textContent = answer;
+        buttonEl.onclick = selectAnswer;
+        answerDiv.appendChild(buttonEl);
+    })
 }
 
 function startTimer() {
@@ -39,11 +51,23 @@ function startTimer() {
             clearInterval(timeInterval);
             endQuiz();
         }
-    })
+    }, 1000);
 }
 
 function selectAnswer() {
-
+    if (this.value === questions[questionIndex].correct_answer) {
+        questionIndex++;
+        userScore++;
+        setNextQuestion();
+    } else {
+        secondsLeft -= 5;
+            if (secondsLeft <= 0) {
+                endQuiz();
+            } else {
+                questionIndex++;
+                setNextQuestion(); 
+            }       
+    }
 }
 
 function endQuiz() {
@@ -56,48 +80,30 @@ function endQuiz() {
 var questions = [
     {
         question: 'Which of these birds can fly?',
-        answers: [
-            {text: 'Penguin', correct: false },
-            {text: 'Flamingo', correct: true },
-            {text: 'Ostrich', correct: false},
-            {text: 'Peacock', correct: false}
-        ]
+        answers: ['Penguin', 'Flamingo', 'Ostrich', 'Kiwi'],
+        correct_answer: 'Flamingo'
     },
     {
         question: 'What is the fastest animal on earth?',
-        answers: [
-            {text: 'Eagle', correct: false},
-            {text: 'Wolf', correct: false},
-            {text: 'Cheetah', correct: true},
-            {text: 'Kangaroo', correct: false}
-        ]
+        answers: ['Eagle', 'Wolf', 'Cheetah', 'Kangaroo'],
+        correct_answer: 'Cheetah'
+            
     },
     {
         question: 'Which animal has the longest migration?',
-        answers: [
-            {text: 'Arctic Tern', correct: true},
-            {text: 'Monarch Butterfly', correct: false},
-            {text: 'African Elephant', correct: false},
-            {text: 'Humpback Whale', correct: false}
-        ]
+        answers: ['Arctic Tern', 'Monarch Butterfly','African Elephant', 'Humpback Whale'],
+        correct_answer: 'Arctic Tern'
+        
     },
     {
         question: 'Which is the only mammal that can fly?',
-        answers: [
-            {text: 'Owl', correct: false},
-            {text: 'Moth', correct: false},
-            {text: 'Flying Squirrel', correct: false},
-            {text: 'Bat', correct: true}
-        ]
+        answers: ['Owl', 'Moth', 'Flying Squirrel', 'Bat'],
+        correct_answer: 'Bat'
     },
     {
         question: 'Which of these animals mate for life?',
-        answers: [
-            {text: 'Spotted Hyena', correct: false},
-            {text: 'Bottlenose Dolphin', correct: false},
-            {text: 'Bonobos', correct: false},
-            {text: 'Beaver', correct: true}
-        ]
+        answers: ['Spotted Hyena', 'Bottlenose Dolphin', 'Bonobos', 'Beaver'],
+        correct_answer: 'Beaver'
     }
 ]
 
