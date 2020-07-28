@@ -7,6 +7,7 @@ var endContainer = document.getElementById('end-container');
 var timeEl = document.getElementById('timer');
 var endQuizContainer = document.getElementById('end-container');
 var answerDiv = document.getElementById('answer-buttons');
+var submitScoreBtn = document.getElementById('button-addon2')
 
 //JS Variables
 var secondsLeft = 60;
@@ -47,7 +48,7 @@ function startTimer() {
         secondsLeft--;
         timeEl.textContent = "Timer: " + secondsLeft;
 
-        if(secondsLeft === 0) {
+        if(secondsLeft <= 0) {
             clearInterval(timeInterval);
             endQuiz();
         }
@@ -57,10 +58,10 @@ function startTimer() {
 function selectAnswer() {
     if (this.value === questions[questionIndex].correct_answer) {
         questionIndex++;
-        userScore++;
+        userScore+=3;
         setNextQuestion();
     } else {
-        secondsLeft -= 5;
+        secondsLeft -= 10;
             if (secondsLeft <= 0) {
                 endQuiz();
             } else {
@@ -71,10 +72,15 @@ function selectAnswer() {
 }
 
 function endQuiz() {
+    clearInterval(timeInterval);
     questionContainer.classList.add('hide');
     endQuizContainer.classList.remove('hide');
     userEndScore = document.getElementById('scoreTotal');
     userEndScore.innerText = "Your final score is: " + userScore;
+}
+
+function submitScore() {
+
 }
 
 var questions = [
@@ -87,18 +93,31 @@ var questions = [
         question: 'What is the fastest animal on earth?',
         answers: ['Eagle', 'Wolf', 'Cheetah', 'Kangaroo'],
         correct_answer: 'Cheetah'
-            
     },
     {
         question: 'Which animal has the longest migration?',
         answers: ['Arctic Tern', 'Monarch Butterfly','African Elephant', 'Humpback Whale'],
         correct_answer: 'Arctic Tern'
-        
     },
     {
         question: 'Which is the only mammal that can fly?',
         answers: ['Owl', 'Moth', 'Flying Squirrel', 'Bat'],
         correct_answer: 'Bat'
+    },
+    {
+        question: 'Which of these animals mate for life?',
+        answers: ['Spotted Hyena', 'Bottlenose Dolphin', 'Bonobos', 'Beaver'],
+        correct_answer: 'Beaver'
+    },
+    {
+        question: 'Which of these animals has the longest nose?',
+        answers: ['Aardvark', 'Rat', 'Wolverine', 'Elephant'],
+        correct_answer: 'Elephant'
+    },
+    {
+        question: 'Which of these animals has spots?',
+        answers: ['Zebra', 'Giraffe', 'Skunk', 'Ring-tailed Lemur'],
+        correct_answer: 'Giraffe'
     },
     {
         question: 'Which of these animals mate for life?',
