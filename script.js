@@ -17,7 +17,6 @@ var storedScore = localStorage.getItem("score");
 var secondsLeft = 60;
 var userScore = 0;
 var questionIndex = 0;
-var answerSeconds = 3;
 
 //JS button Events
 startButton.addEventListener("click", startQuiz);
@@ -61,37 +60,22 @@ function startTimer() {
 
 //Answer Timer which reveals if answer is right or wrong after answer is clicked.
 function correctAnswerTimer() {
-    var timeInterval = setInterval(function() {
-        answerSeconds--;
-        answerRevealP.classList.remove('hide');
-        answerRevealP.textContent = "Correct!";
-        if(answerSeconds = 0) {
-            answerRevealP.classList.add('hide');
-            clearInterval(timeInterval);
-            setNextQuestion();
-        }    
-        }, 1000);  
-    } 
+    answerRevealP.textContent = "Correct!";
+    answerRevealP.classList.remove('hide');
+}; 
 
 function wrongAnswerTimer() {
-    var timeInterval = setInterval(function() {
-        answerSeconds--;
-        answerRevealP.classList.remove('hide');
-        answerRevealP.textContent = "Wrong";
-        if(answerSeconds = 0) {
-            answerRevealP.classList.add('hide');
-            clearInterval(timeInterval);
-            setNextQuestion();
-        }
-    }, 1000);  
-    };
+    answerRevealP.textContent = "Wrong";
+    answerRevealP.classList.remove('hide');
+};
 
 //Action after selecting the right or wrong answer
 function selectAnswer() {
     if (this.value === questions[questionIndex].correct_answer) {
-        correctAnswerTimer();
+        setInterval(correctAnswerTimer, 3000);
         questionIndex++;
-        userScore+=3;    
+        userScore+=3;
+        setNextQuestion();    
     } else {
         secondsLeft -= 10;
             if (secondsLeft <= 0) {
@@ -99,7 +83,8 @@ function selectAnswer() {
                 startTimer();
             } else {
                 questionIndex++;
-                wrongAnswerTimer();
+                setInterval(wrongAnswerTimer, 3000);
+                setNextQuestion();
             }       
     }
 }
