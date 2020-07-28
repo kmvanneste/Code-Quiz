@@ -7,12 +7,14 @@ var endContainer = document.getElementById('end-container');
 var timeEl = document.getElementById('timer');
 var endQuizContainer = document.getElementById('end-container');
 var answerDiv = document.getElementById('answer-buttons');
-var submitScoreBtn = document.getElementById('button-addon2')
+var submitScoreBtn = document.getElementById('button-addon2');
+var answerRevealP = document.getElementById('answer-reveal');
 
 //JS Variables
 var secondsLeft = 60;
 var userScore = 0;
 var questionIndex = 0;
+var savedScores = [];
 
 //JS button Events
 startButton.addEventListener("click", startQuiz);
@@ -28,9 +30,6 @@ function startQuiz() {
 function setNextQuestion() {
     answerDiv.innerHTML = "";
     var questionElement = document.getElementById('quizQuestion');
-    console.log("Question element is:", questionElement);
-    console.log("question index is:", questionIndex);
-    console.log(questions[questionIndex].question);
     questionElement.textContent = questions[questionIndex].question;
 
     questions[questionIndex].answers.forEach(function(answer, i) {
@@ -64,6 +63,7 @@ function selectAnswer() {
         secondsLeft -= 10;
             if (secondsLeft <= 0) {
                 endQuiz();
+                startTimer();
             } else {
                 questionIndex++;
                 setNextQuestion(); 
@@ -72,7 +72,6 @@ function selectAnswer() {
 }
 
 function endQuiz() {
-    clearInterval(timeInterval);
     questionContainer.classList.add('hide');
     endQuizContainer.classList.remove('hide');
     userEndScore = document.getElementById('scoreTotal');
@@ -80,6 +79,14 @@ function endQuiz() {
 }
 
 function submitScore() {
+    
+}
+
+function storeScore() {
+
+}
+
+function renderScore() {
 
 }
 
