@@ -33,7 +33,7 @@
             <div class="row btn-group-vertical answer-buttons" id="answer-buttons">
             </div>
             <div class="row answer-reveal">
-                <p class="hide" id="answer-reveal"></p>
+                <p class="hide" id="answer-reveal">Correct!</p>
             </div>
         </div>
 
@@ -59,13 +59,25 @@
                 <h4 id="scoreTotal"></h4>
             </div>
             <div class="row input-group mb-3 end-game-submit">
-                <input type="text" class="form-control" placeholder="Player Initials" aria-label="Player Initials" aria-describedby="button-addon2">
+                <input id="userInitials" type="text" class="form-control" placeholder="Player Initials" aria-label="Player Initials" aria-describedby="button-addon2">
                 <div class="input-group-append">
                     <button class="btn submit-score-btn btn-outline-success" type="button" id="button-addon2">Submit Score</button>
                 </div>
             </div>
         </div>
         
+        <!-- High Score container -->
+        <div class="score-container hide" id="score-container">
+            <div class="row score-results">
+                <h2>High Score</h2>
+            </div>    
+            <div class="row score-list">    
+                <ul id="score-list"></ul>
+            </div>
+            <div class="row start">
+                <button class="btn btn-outline-success" id="start-btn">Start</button>
+            </div>
+        </div>
     </div>
 
 

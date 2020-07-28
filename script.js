@@ -7,14 +7,17 @@ var endContainer = document.getElementById('end-container');
 var timeEl = document.getElementById('timer');
 var endQuizContainer = document.getElementById('end-container');
 var answerDiv = document.getElementById('answer-buttons');
-var submitScoreBtn = document.getElementById('button-addon2');
 var answerRevealP = document.getElementById('answer-reveal');
+
+var initialsInput = document.getElementById('userInitials');
+var submitScoreBtn = document.getElementById('button-addon2');
+var storedScore = localStorage.getItem("score");
 
 //JS Variables
 var secondsLeft = 60;
 var userScore = 0;
 var questionIndex = 0;
-var savedScores = [];
+var answerSeconds = 3;
 
 //JS button Events
 startButton.addEventListener("click", startQuiz);
@@ -26,7 +29,8 @@ function startQuiz() {
     setNextQuestion();
     startTimer();
 }
-//Brings up new question
+
+//Brings up new question and generates buttons with corresponding answers
 function setNextQuestion() {
     answerDiv.innerHTML = "";
     var questionElement = document.getElementById('quizQuestion');
@@ -42,6 +46,7 @@ function setNextQuestion() {
     })
 }
 
+//Timer
 function startTimer() {
     var timeInterval = setInterval(function() {
         secondsLeft--;
@@ -54,11 +59,39 @@ function startTimer() {
     }, 1000);
 }
 
+//Answer Timer which reveals if answer is right or wrong after answer is clicked.
+function correctAnswerTimer() {
+    var timeInterval = setInterval(function() {
+        answerSeconds--;
+        answerRevealP.classList.remove('hide');
+        answerRevealP.textContent = "Correct!";
+        if(answerSeconds = 0) {
+            answerRevealP.classList.add('hide');
+            clearInterval(timeInterval);
+            setNextQuestion();
+        }    
+        }, 1000);  
+    } 
+
+function wrongAnswerTimer() {
+    var timeInterval = setInterval(function() {
+        answerSeconds--;
+        answerRevealP.classList.remove('hide');
+        answerRevealP.textContent = "Wrong";
+        if(answerSeconds = 0) {
+            answerRevealP.classList.add('hide');
+            clearInterval(timeInterval);
+            setNextQuestion();
+        }
+    }, 1000);  
+    };
+
+//Action after selecting the right or wrong answer
 function selectAnswer() {
     if (this.value === questions[questionIndex].correct_answer) {
+        correctAnswerTimer();
         questionIndex++;
-        userScore+=3;
-        setNextQuestion();
+        userScore+=3;    
     } else {
         secondsLeft -= 10;
             if (secondsLeft <= 0) {
@@ -66,11 +99,12 @@ function selectAnswer() {
                 startTimer();
             } else {
                 questionIndex++;
-                setNextQuestion(); 
+                wrongAnswerTimer();
             }       
     }
 }
 
+//Brings up End Quiz Container
 function endQuiz() {
     questionContainer.classList.add('hide');
     endQuizContainer.classList.remove('hide');
@@ -132,5 +166,3 @@ var questions = [
         correct_answer: 'Beaver'
     }
 ]
-
-
