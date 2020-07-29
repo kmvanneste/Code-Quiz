@@ -10,6 +10,7 @@ var answerDiv = document.getElementById('answer-buttons');
 var answerRevealP = document.getElementById('answer-reveal');
 var restartQuizBtn = document.getElementById('re-start-btn');
 var scoreContainer = document.getElementById('score-container');
+var viewHighscoresLink = document.getElementById('highscores');
 
 //Saving highscores to local storage
 var initialsInput = document.getElementById('userInitials');
@@ -17,56 +18,14 @@ var submitScoreBtn = document.getElementById('button-addon2');
 var scoreList = document.getElementById('score-list');
 var clearScoreBtn = document.getElementById('clear-scores');
 
-var score = [];
-var initials = [];
-console.log("the user end score in [] is", score);
-console.log("the initials array is", initials);
+var score = localStorage.getItem("score");
+var initialsText = initialsInput.value
+scoreList.textContent = initialsText + "" + userScore;
 
-// init();
-
-// function renderScore() {
-//     scoreList.innerHTML = "";
-//     for (var i = 0; i < score.length; i++) {
-//         var scores = score[i];
-
-//         var li = document.createElement("li");
-//         li.textContent = scores;
-//         li.setAttribute("data-index", i);
-
-//         scoreList.appendChild(li);
-//     }
-// }
-
-// function init() {
-//     var storedScores = JSON.parse(localStorage.getItem("score"));
-//     if (storedScores !== null) {
-//         score = storedScores;
-//     }
-//     renderScore();
-// }
-
-// function storeScores() {
-//     localStorage.setItem("score", JSON.stringify(score));
-// }
-
-// submitScoreBtn.addEventListener("submit", function(event) {
-//     event.preventDefault();
-//     var initialsText = initialsInput.value.trim();
-//     if (initialsText === "") {
-//         return;
-//     }
-//     scores.push(initialsText);
-//     initialsInput.value = "";
-// })
-
-// clearScoreBtn.addEventListener("click", function(event) {
-//     var element = event.target;
-//     var index = element.parentElement.getAttribute("data-index");
-//     score.splice(index, 1);
-    
-//     storeScores();
-//     renderScore();
-// })
+submitScoreBtn.addEventListener("click", function(){
+    score = scoreList.textContent;
+    localStorage.setItem("score", score);
+})
 
 //JS Variables
 var secondsLeft = 60;
@@ -77,6 +36,7 @@ var questionIndex = 0;
 startButton.addEventListener("click", startQuiz);
 restartQuizBtn.addEventListener("click", reloadPage);
 submitScoreBtn.addEventListener("click", revealScores);
+viewHighscoresLink.addEventListener("click", revealScores);
 
 function reloadPage() {
     location.reload();
@@ -161,8 +121,8 @@ function endQuiz() {
 function revealScores() {
     endQuizContainer.classList.add('hide');
     scoreContainer.classList.remove('hide');
-    score.push(userScore);
-    initials.push(initialsInput.value);
+    startContainer.classList.add('hide');
+    questionContainer.classList.add('hide');
 }
 
 var questions = [
