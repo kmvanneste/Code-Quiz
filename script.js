@@ -8,10 +8,63 @@ var timeEl = document.getElementById('timer');
 var endQuizContainer = document.getElementById('end-container');
 var answerDiv = document.getElementById('answer-buttons');
 var answerRevealP = document.getElementById('answer-reveal');
+var restartQuizBtn = document.getElementById('re-start-btn');
+var scoreContainer = document.getElementById('score-container');
 
+//Saving highscores to local storage
 var initialsInput = document.getElementById('userInitials');
 var submitScoreBtn = document.getElementById('button-addon2');
-var storedScore = localStorage.getItem("score");
+var scoreList = document.getElementById('score-list');
+var clearScoreBtn = document.getElementById('clear-scores');
+
+var score = [];
+
+init();
+
+function renderScore() {
+    scoreList.innerHTML = "";
+    for (var i = 0; i < scores.length; i++) {
+        var score = scores[i];
+
+        var li = document.createElement("li");
+        li.textContent = score;
+        li.setAttribute("data-index", i);
+
+        scoreList.appendChild(li);
+    }
+}
+
+function init() {
+    var storedScores = JSON.parse(localStorage.getItem("scores"));
+    if (storedScores !== null) {
+        scores = storedScores;
+    }
+    renderScore();
+}
+
+function storeScores() {
+    localStorage.setItem("scores", JSON.stringify(scores));
+}
+
+submitScoreBtn.addEventListener("submit", function(event) {
+    event.preventDefault();
+    var initialsText = initialsInput.value.trim();
+    if (initialsText === "") {
+        return;
+    }
+    scores.push(initialsText);
+    initialsInput.value = "";
+})
+
+clearScoreBtn.addEventListener("click", function(event) {
+    var element = event.target;
+    var index = element.parentElement.getAttribute("data-index");
+    scores.splice(index, 1);
+    
+    storeScores();
+    renderScore();
+})
+
 
 //JS Variables
 var secondsLeft = 60;
@@ -20,6 +73,8 @@ var questionIndex = 0;
 
 //JS button Events
 startButton.addEventListener("click", startQuiz);
+restartQuizBtn.addEventListener("click", location.reload);
+submitScoreBtn.addEventListener("click", revealScores);
 
 //press the start button, opens up questions, starts timer!
 function startQuiz() {
@@ -88,7 +143,7 @@ function selectAnswer() {
         }
 }
 
-//Brings up End Quiz Container
+//Reveals End Quiz Container
 function endQuiz() {
     questionContainer.classList.add('hide');
     endQuizContainer.classList.remove('hide');
@@ -96,16 +151,11 @@ function endQuiz() {
     userEndScore.innerText = "Your final score is: " + userScore;
 }
 
-function submitScore() {
-    
-}
-
-function storeScore() {
-
-}
-
-function renderScore() {
-
+//Reveals Highscore Container
+function revealScores() {
+    endQuizContainer.classList.add('hide');
+    scoreContainer.classList.remove('hide');
+    scores.push(userEndScore);
 }
 
 var questions = [
@@ -130,6 +180,11 @@ var questions = [
         correct_answer: 'Bat'
     },
     {
+        question: 'Which of these animals buries it\'s prey to snack on later?',
+        answers: ['Moose', 'Magpie', 'Mountain Lion', 'Manatee'],
+        correct_answer: 'Cardinal'
+    },
+    {
         question: 'Which of these animals mate for life?',
         answers: ['Spotted Hyena', 'Bottlenose Dolphin', 'Bonobos', 'Beaver'],
         correct_answer: 'Beaver'
@@ -145,8 +200,13 @@ var questions = [
         correct_answer: 'Giraffe'
     },
     {
-        question: 'Which of these animals mate for life?',
-        answers: ['Spotted Hyena', 'Bottlenose Dolphin', 'Bonobos', 'Beaver'],
-        correct_answer: 'Beaver'
+        question: 'Which of these animals is red?',
+        answers: ['Cardinal', 'Toad', 'Rabbit', 'Deer'],
+        correct_answer: 'Cardinal'
+    },
+    {
+        question: 'Which of these animals lives in Australia?',
+        answers: ['Tiger', 'Gorilla', 'Koala', 'Polar Bear'],
+        correct_answer: 'Koala'
     }
 ]
