@@ -18,53 +18,55 @@ var scoreList = document.getElementById('score-list');
 var clearScoreBtn = document.getElementById('clear-scores');
 
 var score = [];
+var initials = [];
+console.log("the user end score in [] is", score);
+console.log("the initials array is", initials);
 
-init();
+// init();
 
-function renderScore() {
-    scoreList.innerHTML = "";
-    for (var i = 0; i < scores.length; i++) {
-        var score = scores[i];
+// function renderScore() {
+//     scoreList.innerHTML = "";
+//     for (var i = 0; i < score.length; i++) {
+//         var scores = score[i];
 
-        var li = document.createElement("li");
-        li.textContent = score;
-        li.setAttribute("data-index", i);
+//         var li = document.createElement("li");
+//         li.textContent = scores;
+//         li.setAttribute("data-index", i);
 
-        scoreList.appendChild(li);
-    }
-}
+//         scoreList.appendChild(li);
+//     }
+// }
 
-function init() {
-    var storedScores = JSON.parse(localStorage.getItem("scores"));
-    if (storedScores !== null) {
-        scores = storedScores;
-    }
-    renderScore();
-}
+// function init() {
+//     var storedScores = JSON.parse(localStorage.getItem("score"));
+//     if (storedScores !== null) {
+//         score = storedScores;
+//     }
+//     renderScore();
+// }
 
-function storeScores() {
-    localStorage.setItem("scores", JSON.stringify(scores));
-}
+// function storeScores() {
+//     localStorage.setItem("score", JSON.stringify(score));
+// }
 
-submitScoreBtn.addEventListener("submit", function(event) {
-    event.preventDefault();
-    var initialsText = initialsInput.value.trim();
-    if (initialsText === "") {
-        return;
-    }
-    scores.push(initialsText);
-    initialsInput.value = "";
-})
+// submitScoreBtn.addEventListener("submit", function(event) {
+//     event.preventDefault();
+//     var initialsText = initialsInput.value.trim();
+//     if (initialsText === "") {
+//         return;
+//     }
+//     scores.push(initialsText);
+//     initialsInput.value = "";
+// })
 
-clearScoreBtn.addEventListener("click", function(event) {
-    var element = event.target;
-    var index = element.parentElement.getAttribute("data-index");
-    scores.splice(index, 1);
+// clearScoreBtn.addEventListener("click", function(event) {
+//     var element = event.target;
+//     var index = element.parentElement.getAttribute("data-index");
+//     score.splice(index, 1);
     
-    storeScores();
-    renderScore();
-})
-
+//     storeScores();
+//     renderScore();
+// })
 
 //JS Variables
 var secondsLeft = 60;
@@ -73,8 +75,12 @@ var questionIndex = 0;
 
 //JS button Events
 startButton.addEventListener("click", startQuiz);
-restartQuizBtn.addEventListener("click", location.reload);
+restartQuizBtn.addEventListener("click", reloadPage);
 submitScoreBtn.addEventListener("click", revealScores);
+
+function reloadPage() {
+    location.reload();
+}
 
 //press the start button, opens up questions, starts timer!
 function startQuiz() {
@@ -155,7 +161,8 @@ function endQuiz() {
 function revealScores() {
     endQuizContainer.classList.add('hide');
     scoreContainer.classList.remove('hide');
-    scores.push(userEndScore);
+    score.push(userScore);
+    initials.push(initialsInput.value);
 }
 
 var questions = [
