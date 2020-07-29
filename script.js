@@ -13,22 +13,32 @@ var scoreContainer = document.getElementById('score-container');
 var viewHighscoresLink = document.getElementById('highscores');
 
 //Saving highscores to local storage
-var initialsInput = document.getElementById('userInitials').value;
+var initialsInput = document.getElementById('initials');
 var submitScoreBtn = document.getElementById('button-addon2');
 var scoreList = document.getElementById('score-list');
 var clearScoreBtn = document.getElementById('clear-scores');
 
-var score = localStorage.getItem("score");
-var initials = localStorage.getItem("initials")
-
 submitScoreBtn.addEventListener("click", function(){
-    if (userScore > score) {
-    localStorage.setItem("score", userScore);
-    localStorage.setItem("initials", initialsInput);
-     } else {
-         alert("You beat the high score, better luck next time!");
-     }
+    revealScores();
+    var initials = initialsInput.value.trim();
+
+    if (initials !== "") {
+        var highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+        var gameObj = {
+            score: userScore,
+            initials: initials
+        }
+        highscores.push(gameObj);
+        localStorage.setItem("highscores", JSON.stringify(highscores));
+     } 
+     printScore();
 })
+
+clearScoreBtn.addEventListener("click", function() {
+    localStorage.removeItem("highscores");
+    reloadPage();
+})
+
 
 //JS Variables
 var secondsLeft = 60;
@@ -38,7 +48,6 @@ var questionIndex = 0;
 //JS button Events
 startButton.addEventListener("click", startQuiz);
 restartQuizBtn.addEventListener("click", reloadPage);
-submitScoreBtn.addEventListener("click", revealScores);
 viewHighscoresLink.addEventListener("click", revealScores);
 
 function reloadPage() {
@@ -126,10 +135,19 @@ function revealScores() {
     scoreContainer.classList.remove('hide');
     startContainer.classList.add('hide');
     questionContainer.classList.add('hide');
-    // if (userScore > JSON.parse(localStorage.getItem("score")) {
+    //scoreList.innerText = initials + " has the highest score of: " + userScore;
+}
 
-    // }
-    scoreList.innerText = initialsInput + "has the highest score of: " + userScore;
+function printScore() {
+    var highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+    highscores.sort(function(a, b) {
+        return b.score - a.score;
+    })
+    highscores.forEach(function(score){
+        var liEl = document.createElement("li");
+        liEl.textContent = score.initials + " - " + score.score;
+        scoreList.appendChild(liEl);
+    })
 }
 
 var questions = [
