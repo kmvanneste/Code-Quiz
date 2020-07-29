@@ -13,18 +13,21 @@ var scoreContainer = document.getElementById('score-container');
 var viewHighscoresLink = document.getElementById('highscores');
 
 //Saving highscores to local storage
-var initialsInput = document.getElementById('userInitials');
+var initialsInput = document.getElementById('userInitials').value;
 var submitScoreBtn = document.getElementById('button-addon2');
 var scoreList = document.getElementById('score-list');
 var clearScoreBtn = document.getElementById('clear-scores');
 
 var score = localStorage.getItem("score");
-var initialsText = initialsInput.value
-scoreList.textContent = initialsText + "" + userScore;
+var initials = localStorage.getItem("initials")
 
 submitScoreBtn.addEventListener("click", function(){
-    score = scoreList.textContent;
-    localStorage.setItem("score", score);
+    if (userScore > score) {
+    localStorage.setItem("score", userScore);
+    localStorage.setItem("initials", initialsInput);
+     } else {
+         alert("You beat the high score, better luck next time!");
+     }
 })
 
 //JS Variables
@@ -82,7 +85,7 @@ function startTimer() {
 //Action after selecting the right or wrong answer, also gives user Correct or Wrong message
 function selectAnswer() {
     if (this.value === questions[questionIndex].correct_answer) {
-        var correctReveal = setInterval(correctAnswerTimer, 100);
+        var correctReveal = setInterval(correctAnswerTimer, 50);
             function correctAnswerTimer() {
                 answerRevealP.textContent = "Correct!";
                 answerRevealP.classList.remove('hide');
@@ -98,7 +101,7 @@ function selectAnswer() {
                 startTimer();
             } else {
                 questionIndex++;
-                var wrongReveal = setInterval(wrongAnswerTimer, 100);
+                var wrongReveal = setInterval(wrongAnswerTimer, 50);
                     function wrongAnswerTimer() {
                         answerRevealP.textContent = "Wrong";
                         answerRevealP.classList.remove('hide');
@@ -123,6 +126,10 @@ function revealScores() {
     scoreContainer.classList.remove('hide');
     startContainer.classList.add('hide');
     questionContainer.classList.add('hide');
+    // if (userScore > JSON.parse(localStorage.getItem("score")) {
+
+    // }
+    scoreList.innerText = initialsInput + "has the highest score of: " + userScore;
 }
 
 var questions = [
