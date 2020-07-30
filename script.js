@@ -47,7 +47,10 @@ var questionIndex = 0;
 //JS button Events
 startButton.addEventListener("click", startQuiz);
 restartQuizBtn.addEventListener("click", reloadPage);
-viewHighscoresLink.addEventListener("click", revealScores);
+viewHighscoresLink.addEventListener("click", function() {
+    revealScores();
+    printScore();
+});
 
 function reloadPage() {
     location.reload();
@@ -173,7 +176,7 @@ var questions = [
     {
         question: 'Which of these animals buries it\'s prey to snack on later?',
         answers: ['Moose', 'Magpie', 'Mountain Lion', 'Manatee'],
-        correct_answer: 'Cardinal'
+        correct_answer: 'Mountain Lion'
     },
     {
         question: 'Which of these animals mate for life?',
