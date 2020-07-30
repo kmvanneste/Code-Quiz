@@ -39,7 +39,6 @@ clearScoreBtn.addEventListener("click", function() {
     reloadPage();
 })
 
-
 //JS Variables
 var secondsLeft = 60;
 var userScore = 0;
@@ -135,9 +134,9 @@ function revealScores() {
     scoreContainer.classList.remove('hide');
     startContainer.classList.add('hide');
     questionContainer.classList.add('hide');
-    //scoreList.innerText = initials + " has the highest score of: " + userScore;
 }
 
+//prints high scores in list on high score page
 function printScore() {
     var highscores = JSON.parse(localStorage.getItem("highscores")) || [];
     highscores.sort(function(a, b) {
