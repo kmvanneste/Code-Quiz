@@ -8,4 +8,18 @@ The Animal Quiz is a great way to brush up on your natural history knowledge.  A
 
 Good luck!
 
+## Access and Appearance
+
+URL to quiz: file:///Users/kristen/Desktop/Homework/Code-Quiz/index.html
+
+Image of the starting page:
+
+![image](Assets/AnimalQuiz_StartPage.png)
+
+Image of a quiz question:
+
+![image](Assets/Quiz_Question.png)
+
+
+
 
