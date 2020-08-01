@@ -35,7 +35,7 @@ submitScoreBtn.addEventListener("click", function(){
 })
 
 clearScoreBtn.addEventListener("click", function() {
-    localStorage.removeItem("highscores");
+    localStorage.clear();
     reloadPage();
 })
 
