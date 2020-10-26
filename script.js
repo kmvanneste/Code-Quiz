@@ -93,8 +93,9 @@ clearScoreBtn.addEventListener("click", function() {
 })
 
 //JS Variables
-var secondsLeft = 60;
-var userScore = 0;
+let secondsLeft = 60;
+let userScore = 0;
+let index = randomQuestion();
 
 //Random next question
 function randomQuestion() {
@@ -125,10 +126,11 @@ function startQuiz() {
 //Brings up new question and generates buttons with corresponding answers
 function setNextQuestion() {
     answerDiv.innerHTML = "";
+    let newQuestion = randomQuestion();
     var questionElement = document.getElementById('quizQuestion');
-    questionElement.textContent = questions[randomQuestion()].question;
+    questionElement.textContent = questions[newQuestion].question;
 
-    questions[randomQuestion()].answers.forEach(function(answer, i) {
+    questions[newQuestion].answers.forEach(function(answer, i) {
         var buttonEl = document.createElement("button");
         buttonEl.classList.add("btn", "btn-outline-secondary");
         buttonEl.setAttribute("value", answer);
@@ -153,7 +155,7 @@ function startTimer() {
 
 //Action after selecting the right or wrong answer, also gives user Correct or Wrong message
 function selectAnswer() {
-    if (this.value === questions[randomQuestion()].correct_answer) {
+    if (this.value === questions[index].correct_answer) {
         var correctReveal = setInterval(correctAnswerTimer, 50);
             function correctAnswerTimer() {
                 answerRevealP.textContent = "Correct!";
