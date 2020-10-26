@@ -10,7 +10,7 @@ Good luck!
 
 ## Appearance
 
-URL to quiz: https://kmvanneste.github.io/Code-Quiz/
+[Link to quiz](https://kmvanneste.github.io/Code-Quiz/)
 
 Image of the starting page:
 
