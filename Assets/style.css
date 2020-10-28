@@ -61,13 +61,13 @@ body {
     display: none;
 }
 
-/* .pic {
-    height: 460px;
-} */
+#timer {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    align-content: center;
+    text-align: center;
+}
 
-@media (min-width: 768px) {
-    .modal-xl {
-      width: 90%;
-     max-width:1200px;
-    }
-  }
+.modal-footer{
+    justify-content: center;
+}

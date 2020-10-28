@@ -12,7 +12,7 @@
 <title>Animal Quiz</title>
 </head>
 <body>
-<!-- Top Row -->
+<!-- Navbar -->
       <div class="row top" id="top-row">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,25 +29,25 @@
               </ul>
             </div>
           </nav>
+        </div>
+        <div class="row">
+          <h4 class="col-md-12" id="timer"></h4>
+        </div>
             
         <!-- Modal -->
-        <div class="modal fade modal-xl" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl">
-              <div class="modal-content">
+              <div class="modal-content text-center">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="staticBackdropLabel">Directions</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
-                    You have 60 seconds to answer as many questions as possible.<br>
-                <ul>
-                    <li>Wrong answers subtract 10 seconds from the timer.</li> 
-                    <li>Correct answers are worth 3 points.</li>
-                </ul>
-                    Play multiple times to try and beat your high score!
-                    
+                <div class="modal-body text-center">
+                    <p>You have 60 seconds to answer as many questions as possible.</p>
+                    <p>Wrong answers subtract 10 seconds from the timer.</p> 
+                    <p>Correct answers are worth 3 points.</p>
+                    <p>Play multiple times to try and beat your high score!</p>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -55,11 +55,6 @@
               </div>
             </div>
           </div>
-        <div class="col-md-8"></div>
-        <div class="col-md-2">
-            <h4 id="timer"></h4>
-        </div>
-    </div>
 
 <!-- overarching container -->
     <div class="container">

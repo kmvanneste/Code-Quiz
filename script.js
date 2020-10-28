@@ -12,7 +12,153 @@ var restartQuizBtn = document.getElementById('re-start-btn');
 var scoreContainer = document.getElementById('score-container');
 var viewHighscoresLink = document.getElementById('highscores');
 
-var questions = [
+//JS Variables
+var secondsLeft = 60;
+var userScore = 0;
+var index = 0
+// let index = Math.floor(Math.random() * questions.length);
+
+//Saving highscores to local storage
+var initialsInput = document.getElementById('initials');
+var submitScoreBtn = document.getElementById('button-addon2');
+var scoreList = document.getElementById('score-list');
+var clearScoreBtn = document.getElementById('clear-scores');
+
+submitScoreBtn.addEventListener("click", function(){
+    revealScores();
+    var initials = initialsInput.value.trim();
+
+    if (initials !== "") {
+        var highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+        var gameObj = {
+            score: userScore,
+            initials: initials
+        }
+        highscores.push(gameObj);
+        localStorage.setItem("highscores", JSON.stringify(highscores));
+     } 
+     printScore();
+})
+
+clearScoreBtn.addEventListener("click", function() {
+    localStorage.clear();
+    reloadPage();
+})
+
+//JS button Events
+startButton.addEventListener("click", startQuiz);
+restartQuizBtn.addEventListener("click", reloadPage);
+viewHighscoresLink.addEventListener("click", function() {
+    revealScores();
+    printScore();
+});
+
+function reloadPage() {
+    location.reload();
+}
+
+//press the start button, opens up questions, starts timer!
+function startQuiz() {
+    startContainer.classList.add('hide');
+    questionContainer.classList.remove('hide');
+    setNextQuestion();
+    startTimer();
+}
+
+//Brings up new question and generates buttons with corresponding answers
+function setNextQuestion() {
+    answerDiv.innerHTML = "";
+    var questionElement = document.getElementById('quizQuestion');
+    questionElement.textContent = questions[index].question;
+
+    questions[index].answers.forEach(function(answer, i) {
+        var buttonEl = document.createElement("button");
+        buttonEl.classList.add("btn", "btn-outline-secondary");
+        buttonEl.setAttribute("value", answer);
+        buttonEl.textContent = answer;
+        buttonEl.onclick = selectAnswer;
+        answerDiv.appendChild(buttonEl);
+    })
+}
+
+//Timer
+function startTimer() {
+    var timeInterval = setInterval(function() {
+        secondsLeft--;
+        timeEl.textContent = "Timer: " + secondsLeft;
+
+        if(secondsLeft <= 0) {
+            clearInterval(timeInterval);
+            endQuiz();
+        }
+    }, 1000);
+}
+
+//Action after selecting the right or wrong answer, also gives user Correct or Wrong message
+function selectAnswer() {
+    if (this.value === questions[index].correct_answer) {
+        var correctReveal = setInterval(correctAnswerTimer, 50);
+            function correctAnswerTimer() {
+                answerRevealP.textContent = "Correct!";
+                answerRevealP.classList.remove('hide');
+                clearInterval(correctReveal);
+            }; 
+        userScore+=3;
+        index+=1;
+        setNextQuestion();    
+    } else {
+        secondsLeft -= 10;
+            if (secondsLeft <= 0) {
+                endQuiz();
+                startTimer();
+            } else {
+                var wrongReveal = setInterval(wrongAnswerTimer, 50);
+                    function wrongAnswerTimer() {
+                        answerRevealP.textContent = "Wrong";
+                        answerRevealP.classList.remove('hide');
+                        clearInterval(wrongReveal);
+                    };
+                index+=1;
+                setNextQuestion();
+            }       
+        }
+}
+
+//Reveals End Quiz Container
+function endQuiz() {
+    questionContainer.classList.add('hide');
+    endQuizContainer.classList.remove('hide');
+    userEndScore = document.getElementById('scoreTotal');
+    userEndScore.innerText = "Your final score is: " + userScore;
+}
+
+//Reveals Highscore Container
+function revealScores() {
+    endQuizContainer.classList.add('hide');
+    scoreContainer.classList.remove('hide');
+    startContainer.classList.add('hide');
+    questionContainer.classList.add('hide');
+}
+
+//prints high scores in list on high score page
+function printScore() {
+    var highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+    highscores.sort(function(a, b) {
+        return b.score - a.score;
+    })
+    highscores.forEach(function(score){
+        var liEl = document.createElement("li");
+        liEl.textContent = score.initials + " - " + score.score;
+        scoreList.appendChild(liEl);
+    })
+}
+
+//carousel
+$('.carousel').carousel({
+    interval: 5000
+  })
+
+  var questions = [
     {
         question: 'Which of these birds can fly?',
         answers: ['Penguin', 'Flamingo', 'Ostrich', 'Kiwi'],
@@ -64,155 +210,3 @@ var questions = [
         correct_answer: 'Koala'
     }
 ]
-
-//Saving highscores to local storage
-var initialsInput = document.getElementById('initials');
-var submitScoreBtn = document.getElementById('button-addon2');
-var scoreList = document.getElementById('score-list');
-var clearScoreBtn = document.getElementById('clear-scores');
-
-submitScoreBtn.addEventListener("click", function(){
-    revealScores();
-    var initials = initialsInput.value.trim();
-
-    if (initials !== "") {
-        var highscores = JSON.parse(localStorage.getItem("highscores")) || [];
-        var gameObj = {
-            score: userScore,
-            initials: initials
-        }
-        highscores.push(gameObj);
-        localStorage.setItem("highscores", JSON.stringify(highscores));
-     } 
-     printScore();
-})
-
-clearScoreBtn.addEventListener("click", function() {
-    localStorage.clear();
-    reloadPage();
-})
-
-//JS Variables
-let secondsLeft = 60;
-let userScore = 0;
-let index = randomQuestion();
-
-//Random next question
-function randomQuestion() {
- var questionIndex = Math.floor(Math.random() * questions.length)
- return questionIndex;
-}
-
-//JS button Events
-startButton.addEventListener("click", startQuiz);
-restartQuizBtn.addEventListener("click", reloadPage);
-viewHighscoresLink.addEventListener("click", function() {
-    revealScores();
-    printScore();
-});
-
-function reloadPage() {
-    location.reload();
-}
-
-//press the start button, opens up questions, starts timer!
-function startQuiz() {
-    startContainer.classList.add('hide');
-    questionContainer.classList.remove('hide');
-    setNextQuestion();
-    startTimer();
-}
-
-//Brings up new question and generates buttons with corresponding answers
-function setNextQuestion() {
-    answerDiv.innerHTML = "";
-    let newQuestion = randomQuestion();
-    var questionElement = document.getElementById('quizQuestion');
-    questionElement.textContent = questions[newQuestion].question;
-
-    questions[newQuestion].answers.forEach(function(answer, i) {
-        var buttonEl = document.createElement("button");
-        buttonEl.classList.add("btn", "btn-outline-secondary");
-        buttonEl.setAttribute("value", answer);
-        buttonEl.textContent = answer;
-        buttonEl.onclick = selectAnswer;
-        answerDiv.appendChild(buttonEl);
-    })
-}
-
-//Timer
-function startTimer() {
-    var timeInterval = setInterval(function() {
-        secondsLeft--;
-        timeEl.textContent = "Timer: " + secondsLeft;
-
-        if(secondsLeft <= 0) {
-            clearInterval(timeInterval);
-            endQuiz();
-        }
-    }, 1000);
-}
-
-//Action after selecting the right or wrong answer, also gives user Correct or Wrong message
-function selectAnswer() {
-    if (this.value === questions[index].correct_answer) {
-        var correctReveal = setInterval(correctAnswerTimer, 50);
-            function correctAnswerTimer() {
-                answerRevealP.textContent = "Correct!";
-                answerRevealP.classList.remove('hide');
-                clearInterval(correctReveal);
-            }; 
-        randomQuestion();
-        userScore+=3;
-        setNextQuestion();    
-    } else {
-        secondsLeft -= 10;
-            if (secondsLeft <= 0) {
-                endQuiz();
-                startTimer();
-            } else {
-                randomQuestion();
-                var wrongReveal = setInterval(wrongAnswerTimer, 50);
-                    function wrongAnswerTimer() {
-                        answerRevealP.textContent = "Wrong";
-                        answerRevealP.classList.remove('hide');
-                        clearInterval(wrongReveal);
-                    };
-                setNextQuestion();
-            }       
-        }
-}
-
-//Reveals End Quiz Container
-function endQuiz() {
-    questionContainer.classList.add('hide');
-    endQuizContainer.classList.remove('hide');
-    userEndScore = document.getElementById('scoreTotal');
-    userEndScore.innerText = "Your final score is: " + userScore;
-}
-
-//Reveals Highscore Container
-function revealScores() {
-    endQuizContainer.classList.add('hide');
-    scoreContainer.classList.remove('hide');
-    startContainer.classList.add('hide');
-    questionContainer.classList.add('hide');
-}
-
-//prints high scores in list on high score page
-function printScore() {
-    var highscores = JSON.parse(localStorage.getItem("highscores")) || [];
-    highscores.sort(function(a, b) {
-        return b.score - a.score;
-    })
-    highscores.forEach(function(score){
-        var liEl = document.createElement("li");
-        liEl.textContent = score.initials + " - " + score.score;
-        scoreList.appendChild(liEl);
-    })
-}
-
-//carousel
-$('.carousel').carousel({
-    interval: 5000
-  })
