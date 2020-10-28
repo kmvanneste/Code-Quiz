@@ -14,11 +14,41 @@
 <body>
 <!-- Top Row -->
       <div class="row top" id="top-row">
-        <div class="col-md-1">
+        <div class="col-md-2">
             <button class="highscore-btn btn btn-link" id="highscores">View High Score</button>
         </div>
-        <div class="col-md-10"></div>
-        <div class="col-md-1">
+        <div class="col-md-2">
+             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+                Directions
+             </button>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Directions</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    You have 60 seconds to answer as many questions as possible.<br>
+                <ul>
+                    <li>Wrong answers subtract 10 seconds from the timer.</li> 
+                    <li>Correct answers are worth 3 points.</li>
+                </ul>
+                    Play multiple times to try and beat your high score!
+                    
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="col-md-8"></div>
+        <div class="col-md-2">
             <h4 id="timer"></h4>
         </div>
     </div>
