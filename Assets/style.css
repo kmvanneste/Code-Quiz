@@ -50,6 +50,7 @@ body {
 .start {
     align-items: center;
     align-content: center;
+    text-align: center;
 }
 
 #score-list {
@@ -59,3 +60,14 @@ body {
 .hide {
     display: none;
 }
+
+/* .pic {
+    height: 460px;
+} */
+
+@media (min-width: 768px) {
+    .modal-xl {
+      width: 90%;
+     max-width:1200px;
+    }
+  }
