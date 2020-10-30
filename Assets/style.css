@@ -9,8 +9,9 @@ body {
     font-size: 14pt;
 }
 
-.top {
-    text-align: left;
+.nav-link {
+    padding: 5px;
+    margin-left: 15px;
 }
 
 .container {

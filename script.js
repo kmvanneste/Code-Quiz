@@ -208,5 +208,25 @@ $('.carousel').carousel({
         question: 'Which of these animals lives in Australia?',
         answers: ['Tiger', 'Gorilla', 'Koala', 'Polar Bear'],
         correct_answer: 'Koala'
+    },
+    {
+        question: 'What is the largest animal on planet Earth?',
+        answers: ['Orca', 'Arican Elephant', 'Blue Whale', 'Bigfoot'],
+        correct_answer: 'Blue Whale'
+    },
+    {
+        question: 'Which bird of prey is the fastest flyer',
+        answers: ['Bald Eagle', 'Peregrine Falcon', 'Hummingbird', 'American Robin'],
+        correct_answer: 'Peregrine Falcon'
+    },
+    {
+        question: 'Which animal has the highest population on earth?',
+        answers: ['Domestic Dog', 'Domestic Pig', 'Domestic Sheep', 'Domestic Cow'],
+        correct_answer: 'Domestic Cow'
+    },
+    {
+        question: 'Which of these animals has blue blood?',
+        answers: ['Crocodiles', 'Cats', 'Octopus', 'Lizards'],
+        correct_answer: 'Octopus'
     }
 ]
