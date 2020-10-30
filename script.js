@@ -228,5 +228,10 @@ $('.carousel').carousel({
         question: 'Which of these animals has blue blood?',
         answers: ['Crocodiles', 'Cats', 'Octopus', 'Lizards'],
         correct_answer: 'Octopus'
+    },
+    {
+        question: 'Which of these animals does the male carry the unborn offspring?',
+        answers: ['Chameleon', 'Frog', 'Crow', 'Seahorse'],
+        correct_answer: 'Seahorse'
     }
 ]
